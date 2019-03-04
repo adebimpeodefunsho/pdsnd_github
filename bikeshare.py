@@ -125,11 +125,9 @@ def station_stats(df):
     print('popular start station:', popular_start_station)
     count = df['Start Station'].value_counts().head(1)
     print('count:{}'.format(count))
-
     print("\nThis took %s seconds." % (time.time() - start_time))
-
     print('\nThe Most Popular End Stations is...\n')
-
+    # find the most popular end station
     popular_end_station = df['End Station'].mode()[0]
     print('popular end station:', popular_end_station)
     count = df['End Station'].value_counts().head(1)
@@ -141,7 +139,6 @@ def station_stats(df):
     print('popular end and start station:', popular_start_end_station)
     count = df['start_and_end_station'].value_counts().head(1)
     print('count:{}'.format(count))
-
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -158,7 +155,6 @@ def trip_duration_stats(df):
     print("Total travel time is:{}".format(Total_travel_time))
     print("Mean travel time is:{}".format(mean_travel_time))
     print("\nThis took %s seconds." % (time.time() - start_time))
-
     print('-'*40)
 
 
