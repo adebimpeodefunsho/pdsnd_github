@@ -32,13 +32,13 @@ def get_filters():
         day = 'all'
         while month not in mth:
            month = input("month not available,The month you entered must not exceed 'june'.Pls enter a valid month").lower()
-        
+
     elif response == "day":
         day = input("Enter the day you want to filter with e.g. sunday, friday e.t.c").lower()
         month ='all'
         while day not in avail_day:
            day = input("Day not available. Enter a valid day e.g, sunday, monday etc ").lower()
-        
+
     elif response =="both":
         month = input("which month? e.g january, february e.t.c").lower()
         while month not in mth:
@@ -46,11 +46,11 @@ def get_filters():
         day = input("which day? Please enter the day e.g. sunday, friday e.t.c").lower()
         while day not in avail_day:
            day = input("Day not available. Enter a valid day e.g. sunday, monday, friday").lower()
-    
+
     else:
         day ='all'
         month = 'all'
-        print("Your data will display without a filter")
+        print("Kindly note that your data will display without a filter")
     print('-'*40)
     return city, month, day
 
@@ -86,8 +86,12 @@ def load_data(city, month, day):
     return df
 
 def time_stats(df):
+    """
+    This function computes the time statistics as requested by the users
+    Args: Dataframe received from the load_data function
+    """
     start_time = time.time()
-    print("Computing the most frequent times of travel.")
+    print("Computing the most frequent times of travel..Will display in a bit!")
     # find the most popular hour
     df['hour'] = df['Start Time'].dt.hour
     popular_hour = df['hour'].mode()[0]
@@ -108,9 +112,9 @@ def time_stats(df):
     print('Most Popular month:', popular_month)
     count = df['month'].value_counts().head(1)
     print('count:{}'.format(count))
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("\nWow! this took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
+
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
     start_time = time.time()
@@ -121,11 +125,9 @@ def station_stats(df):
     print('popular start station:', popular_start_station)
     count = df['Start Station'].value_counts().head(1)
     print('count:{}'.format(count))
-    
     print("\nThis took %s seconds." % (time.time() - start_time))
-    
     print('\nThe Most Popular End Stations is...\n')
-
+    # find the most popular end station
     popular_end_station = df['End Station'].mode()[0]
     print('popular end station:', popular_end_station)
     count = df['End Station'].value_counts().head(1)
@@ -135,13 +137,12 @@ def station_stats(df):
     df['start_and_end_station'] = df['Start Station'] + df['End Station']
     popular_start_end_station = df['start_and_end_station'].mode()[0]
     print('popular end and start station:', popular_start_end_station)
-    count = df['start_and_end_station'].value_counts().head(1) 
+    count = df['start_and_end_station'].value_counts().head(1)
     print('count:{}'.format(count))
-    
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
-    
+
+
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
     print('\nCalculating Trip Duration...\n')
@@ -154,9 +155,8 @@ def trip_duration_stats(df):
     print("Total travel time is:{}".format(Total_travel_time))
     print("Mean travel time is:{}".format(mean_travel_time))
     print("\nThis took %s seconds." % (time.time() - start_time))
-    
     print('-'*40)
-    
+
 
 def user_stats(df):
     try:
@@ -168,7 +168,7 @@ def user_stats(df):
         gender = df['Gender'].value_counts().head(1)
         print(gender)
         df.sort_values(by=['Birth Year'])
-        print('earliest birth year:.....') 
+        print('earliest birth year:.....')
         print(df['Birth Year'].head(1))
         popular_birth_year = df['Birth Year'].mode()[0]
         print('Most Popular year:', popular_birth_year)
@@ -178,7 +178,7 @@ def user_stats(df):
         print('-'*40)
     except:
         print(" An error occured. Possibly a missing raw data to compute your request")
-        
+
 def display_data(city):
     """Displays raw data on bikeshare users."""
     df = pd.read_csv(CITY_DATA[city])
@@ -187,12 +187,13 @@ def display_data(city):
     while response == 'yes':
         print(df.iloc[1 : (count + 1 )])
         count += 5
-        response = input('Do you want to see more raw data? yes or no?')    
+        response = input('Do you want to see more raw data? yes or no?')
     return
-      
+
 def main():
+    """ This is the main function"""
     while True:
-                
+
         city, month, day = get_filters()
         display_data(city)
 
@@ -201,8 +202,8 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-                
-                
+
+
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
