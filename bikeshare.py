@@ -50,7 +50,7 @@ def get_filters():
     else:
         day ='all'
         month = 'all'
-        print("Your data will display without a filter")
+        print("Kindly note that your data will display without a filter")
     print('-'*40)
     return city, month, day
 
@@ -91,7 +91,7 @@ def time_stats(df):
     Args: Dataframe received from the load_data function
     """
     start_time = time.time()
-    print("Computing the most frequent times of travel.")
+    print("Computing the most frequent times of travel..Will display in a bit!")
     # find the most popular hour
     df['hour'] = df['Start Time'].dt.hour
     popular_hour = df['hour'].mode()[0]
@@ -112,7 +112,7 @@ def time_stats(df):
     print('Most Popular month:', popular_month)
     count = df['month'].value_counts().head(1)
     print('count:{}'.format(count))
-    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("\nWow! this took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 def station_stats(df):
